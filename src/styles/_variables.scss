@@ -2,7 +2,10 @@
 $white: rgb(255, 255, 255);
 $black: rgb(0, 0, 0);
 $light-gray: rgb(238, 238, 238);
+$cod-gray: rgb(23, 23, 23);
 
 /***** Base colors *****/
-$content-background: $light-gray;
-$footer-background: $light-gray;
+$content-background: $cod-gray;
+$content-color: $light-gray;
+
+$footer-background: $cod-gray;

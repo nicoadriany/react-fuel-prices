@@ -7,7 +7,6 @@ const PageLayout = (props: any) => (
     <AppContent>
       {props.children}
     </AppContent>
-    <AppFooter></AppFooter>
   </div>
 )
 

@@ -1,0 +1,31 @@
+@import "../../../../../styles/variables";
+
+.tankerkoenig-table {
+  border-collapse: collapse;
+  thead {
+    display: none;
+    tr {
+      th {
+        text-align: left;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      + tr {
+        border-top: 1px solid rgba($content-color, 0.1);
+      }
+
+      td {
+        + td {
+          padding-left: 8px;
+        }
+        padding: 8px 0px;
+        .address {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
