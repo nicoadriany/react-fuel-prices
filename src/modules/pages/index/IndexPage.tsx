@@ -3,24 +3,15 @@ import { IStation } from "../../../models/IStation";
 import { ITankerkoenigResult } from "../../../models/ITankerkoenigResult";
 import { fetchData } from "../../../services/api.service";
 import PageLayout from "../../app/page-layout/PageLayout";
+import DashboardWidget from "./components/DashboardWidget/DashboardWidget";
 import TankerkoenigTable from "./components/TankerkoenigTable/TankerkoenigTable";
 import "./IndexPage.scss";
 
 const IndexPage = () => {
-  const [data, setData] = useState<ITankerkoenigResult|null>(null);
-
-  useEffect(() => {
-    fetchData(10).then((data) => {
-      const json = data.json().then((jsonData: ITankerkoenigResult) => {
-        setData(jsonData);
-      });
-    });
-  }, []);
-
   return (
     <PageLayout>
       <div className="index-page">
-        {data && <TankerkoenigTable stations={data.stations} />}
+        {<DashboardWidget title="Benzinpreise (e10)" refreshInterval={10}><TankerkoenigTable /></DashboardWidget>}
       </div>
     </PageLayout>
   );

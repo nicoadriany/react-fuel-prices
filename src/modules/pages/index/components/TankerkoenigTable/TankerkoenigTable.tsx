@@ -1,12 +1,12 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { IStation } from "../../../../../models/IStation";
+import { ITankerkoenigResult } from "../../../../../models/ITankerkoenigResult";
+import { fetchData } from "../../../../../services/api.service";
 import "./TankerkoenigTable.scss";
 
-interface TankerkoenigTableProps {
-  stations: IStation[];
-}
-
-const TankerkoenigTable = (props: TankerkoenigTableProps) => {
+const TankerkoenigTable = () => {
+  const [data, setData] = useState<ITankerkoenigResult|null>(null);
+  
   const formatMoney = (money: number) => {
     return Intl.NumberFormat("de-DE", {
       style: "currency",
@@ -22,43 +22,49 @@ const TankerkoenigTable = (props: TankerkoenigTableProps) => {
     }).format(distance);
   };
 
+  useEffect(() => {
+    fetchData(10).then((data) => {
+      const json = data.json().then((jsonData: ITankerkoenigResult) => {
+        setData(jsonData);
+        console.log("render table");
+      });
+    });
+  }, []);
+
   return (
-    <Fragment>
-      <h1>Aktuelle Benzinpreise (e10)</h1>
-      <table className="tankerkoenig-table">
-        <thead>
-          <tr>
-            <th>Tankstelle</th>
-            <th>Entfernung</th>
-            <th>Preis (e10)</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.stations
-            .filter((s) => s.price > 0 && s.isOpen)
-            .map((station) => {
-              return (
-                <tr key={station.id}>
-                  <td>
-                    <p>{station.brand}</p>
-                    <div className="address">
-                      <p>
-                        {station.street} {station.houseNumber}
-                      </p>
-                      <p>
-                        {station.postCode} {station.place}
-                      </p>
-                    </div>
-                  </td>
-                  <td>{formatDistance(station.dist)} km</td>
-                  <td>{formatMoney(station.price)}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
-    </Fragment>
+    <table className="tankerkoenig-table">
+      <thead>
+        <tr>
+          <th>Tankstelle</th>
+          <th>Entfernung</th>
+          <th>Preis (e10)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data && data.stations
+          .filter((s) => s.price > 0 && s.isOpen)
+          .map((station) => {
+            return (
+              <tr key={station.id}>
+                <td>
+                  <p>{station.brand}</p>
+                  <div className="address">
+                    <p>
+                      {station.street} {station.houseNumber}
+                    </p>
+                    <p>
+                      {station.postCode} {station.place}
+                    </p>
+                  </div>
+                </td>
+                <td>{formatDistance(station.dist)} km</td>
+                <td>{formatMoney(station.price)}</td>
+              </tr>
+            );
+          })}
+      </tbody>
+    </table>
   );
 };
 
