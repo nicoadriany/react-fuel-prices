@@ -1,0 +1,9 @@
+@import "../../../styles/variables";
+
+.page-layout {
+  background-color: $content-background;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+}

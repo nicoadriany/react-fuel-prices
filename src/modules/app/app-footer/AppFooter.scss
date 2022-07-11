@@ -1,0 +1,10 @@
+@import "../../../styles/variables";
+
+.app-footer {
+  background-color: $footer-background;
+  border-top: 1px solid $black;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

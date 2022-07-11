@@ -1,4 +1,5 @@
 import PageLayout from "../../app/page-layout/PageLayout";
+import "./IndexPage.scss";
 
 const IndexPage = () => {
   return (
