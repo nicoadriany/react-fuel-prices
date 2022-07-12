@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface DashboardWidgetProps {
   title: string;
@@ -15,7 +15,7 @@ const DashboardWidget = (props: DashboardWidgetProps) => {
       setLastRefresh(new Date());
     }, props.refreshInterval * 1000);
     return () => clearInterval(interval);
-  }, [lastRefresh]);
+  }, [props.refreshInterval, lastRefresh]);
 
   return (
     <div className="dashboard-widget">

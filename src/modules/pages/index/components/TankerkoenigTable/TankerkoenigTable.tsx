@@ -1,10 +1,14 @@
-import { Fragment, useEffect, useState } from "react";
-import { IStation } from "../../../../../models/IStation";
+import { useEffect, useState } from "react";
 import { ITankerkoenigResult } from "../../../../../models/ITankerkoenigResult";
 import { fetchData } from "../../../../../services/api.service";
 import "./TankerkoenigTable.scss";
 
-const TankerkoenigTable = () => {
+interface ITankerkoenigTableProps {
+  dist: number;
+  maxEntries: number;
+}
+
+const TankerkoenigTable = (props: ITankerkoenigTableProps) => {
   const [data, setData] = useState<ITankerkoenigResult|null>(null);
   
   const formatMoney = (money: number) => {
@@ -23,13 +27,13 @@ const TankerkoenigTable = () => {
   };
 
   useEffect(() => {
-    fetchData(10).then((data) => {
-      const json = data.json().then((jsonData: ITankerkoenigResult) => {
+    fetchData(props.dist).then((data) => {
+      data.json().then((jsonData: ITankerkoenigResult) => {
         setData(jsonData);
         console.log("render table");
       });
     });
-  }, []);
+  }, [props.dist, props.maxEntries]);
 
   return (
     <table className="tankerkoenig-table">
@@ -44,6 +48,7 @@ const TankerkoenigTable = () => {
       <tbody>
         {data && data.stations
           .filter((s) => s.price > 0 && s.isOpen)
+          .slice(0, props.maxEntries)
           .map((station) => {
             return (
               <tr key={station.id}>
