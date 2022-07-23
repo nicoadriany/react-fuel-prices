@@ -1,5 +1,5 @@
 import PageLayout from "../../app/page-layout/PageLayout";
-import DashboardWidget from "./components/DashboardWidget/DashboardWidget";
+import ClockWidget from "./components/ClockWidget/ClockWidget";
 import TankerkoenigTable from "./components/TankerkoenigTable/TankerkoenigTable";
 import "./IndexPage.scss";
 
@@ -7,7 +7,8 @@ const IndexPage = () => {
   return (
     <PageLayout>
       <div className="index-page">
-        {<DashboardWidget title="Benzinpreise (e10)" refreshInterval={10}><TankerkoenigTable maxEntries={5} dist={10} /></DashboardWidget>}
+        {<TankerkoenigTable maxEntries={5} dist={10} />}
+        {<ClockWidget />}
       </div>
     </PageLayout>
   );
